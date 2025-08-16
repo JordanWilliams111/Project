@@ -151,7 +151,7 @@ class Logic(QMainWindow, Ui_MainWindow):
 
     def ty_pg_sbmt_rtrn(self) -> None:
         """
-        submits the information gathered then stores in csv file, revertcs back to home page while also resetting.
+        submits the information gathered then stores in csv file, reverts back to home page while also resetting.
 
         """
         #opens csvfile, stores information gathered
@@ -167,6 +167,7 @@ class Logic(QMainWindow, Ui_MainWindow):
         self.welcome_page.show()
         self.reset(self.party_group)
         self.reset(self.candidate_group)
+
 
 
 
