@@ -70,12 +70,16 @@ class Ui_MainWindow(object):
         self.label_enter_voter_id.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_enter_voter_id.setObjectName("label_enter_voter_id")
         self.label_wlc_error = QtWidgets.QLabel(parent=self.welcome_page)
-        self.label_wlc_error.setGeometry(QtCore.QRect(130, 290, 161, 31))
+        self.label_wlc_error.setGeometry(QtCore.QRect(110, 270, 191, 41))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.label_wlc_error.setFont(font)
         self.label_wlc_error.setStyleSheet("color:red")
         self.label_wlc_error.setText("")
+        self.label_wlc_error.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_wlc_error.setObjectName("label_wlc_error")
         self.lbl_enter_int_err = QtWidgets.QLabel(parent=self.welcome_page)
-        self.lbl_enter_int_err.setGeometry(QtCore.QRect(80, 280, 231, 31))
+        self.lbl_enter_int_err.setGeometry(QtCore.QRect(100, 270, 231, 31))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.lbl_enter_int_err.setFont(font)
@@ -342,7 +346,7 @@ class Ui_MainWindow(object):
         self.label_your_inf_strd_dtabse.setText(_translate("MainWindow", "Your information can be stored into the database"))
         self.pushButton_ty_pg_sbt.setText(_translate("MainWindow", "Submit"))
 
-###keep this
+        ###keep this
         self.candidate_group = QtWidgets.QButtonGroup(MainWindow)
         self.candidate_group.addButton(self.radioButton_jhn_smith_cnd)
         self.candidate_group.addButton(self.radioButton_jim_cle_cnd)
