@@ -8,12 +8,14 @@ class Logic(QMainWindow, Ui_MainWindow):
     """
     main class used for the logic of the voting ballot program
     """
+
     def __init__(self) -> None:
         """
         initializes the program, this connects the next button to the correct page while making sure that radiobuttons are set up correctly
         """
         super().__init__()
         self.setupUi(self)
+
         # next button connection
         self.pushButton_wlc_nxt_btn.clicked.connect(self.voter_id_check_wlc_pg)
         self.pushButton_prty_pg_next.clicked.connect(self.party_page_check)
@@ -36,10 +38,12 @@ class Logic(QMainWindow, Ui_MainWindow):
        # self.button_group.addButton(radio2)
         #self.button_group.addButton(radio3)
 
+
     def reset(self, group: QtWidgets.QButtonGroup) -> None:
         """
         method that allows the program to properly be reset
         """
+
         # Temporarily allow no selection, uncheck all, then restore exclusivity
         group.setExclusive(False)
         for b in group.buttons():
@@ -51,21 +55,40 @@ class Logic(QMainWindow, Ui_MainWindow):
 
     def voter_id_check_wlc_pg(self) -> int:
         """
-        welcome page; ensuring that advancement can only be made when conditions are met
-        returns:
-            self.voter_id
+        method that checks Id of voter, moves to next page if met conditions
+            returns:
+                self.voter_id
         """
+
         self.voter_id = self.lineEdit_id_number.text().strip()
+
         try:
             self.voter_id = int(self.voter_id)
+            #checking csvfile for dupes,
+            try:
+                with open('data.csv', newline= '') as csvfile:
+                    check_dupe = csv.reader(csvfile)
+                    for row in check_dupe:
+            # if dupe is found, it produces error message
+                        if row and str(self.voter_id) == row[0]:
+                            self.label_wlc_error.setText("Id already used")
+                            self.lineEdit_id_number.clear()
+                            return self.voter_id
+            # program and user move forward, if no dupe is found
+            except FileNotFoundError:
+                pass
+
+
             self.label_wlc_error.setText(" ")
             self.welcome_page.hide()
             self.party_page.show()
-
+        #error message appears when any input other than numbers are present
         except ValueError:
             self.label_wlc_error.setText('Only numbers are accepted')
         self.lineEdit_id_number.clear()
         return self.voter_id
+
+
 
     def party_page_check(self) -> str:
         """
@@ -74,7 +97,11 @@ class Logic(QMainWindow, Ui_MainWindow):
             error text and self.prty
 
         """
+
+        #setting the button to None at first
         self.prty = None
+
+        #Allowing the buttons to have data to be properly stored when clicked and sumbitted
         if self.radioButton_ind.isChecked():
             self.prty = "Indepandent"
         elif self.radioButton_na.isChecked():
@@ -84,17 +111,16 @@ class Logic(QMainWindow, Ui_MainWindow):
         elif self.radioButton_rep.isChecked():
             self.prty = "Republican"
         else:
-
+            #error message when no button is clicked
             self.lbl_prty_pg_err.setText("Must be filled out before continuing")
             return
 
         self.lbl_prty_pg_err.setText(" ")
-
         self.party_page.hide()
         self.candidate_page.show()
 
-
         return self.prty
+
 
     def candidate_page_check(self) -> str:
         """
@@ -104,7 +130,10 @@ class Logic(QMainWindow, Ui_MainWindow):
             self.cnd
 
         """
+
+        #allowing buttons to have data when clicked then submitted
         self.cnd = None
+
         if self.radioButton_jim_cle_cnd.isChecked():
             self.cnd = "John D. Smith"
         elif self.radioButton_jhn_smith_cnd.isChecked():
@@ -117,8 +146,7 @@ class Logic(QMainWindow, Ui_MainWindow):
         self.candidate_page.hide()
         self.thank_you_page.show()
 
-        self.radioButton_jhn_smith_cnd.setChecked(False)
-        self.radioButton_jim_cle_cnd.setChecked(False)
+
         return self.cnd
 
     def ty_pg_sbmt_rtrn(self) -> None:
@@ -126,18 +154,21 @@ class Logic(QMainWindow, Ui_MainWindow):
         submits the information gathered then stores in csv file, revertcs back to home page while also resetting.
 
         """
+        #opens csvfile, stores information gathered
         with open('data.csv', 'a', newline = '') as csvfile:
             content = csv.writer(csvfile)
             content.writerow([self.voter_id, self.prty, self.cnd])
 
 
-
+        #resets the program and flips to welcome page
         self.thank_you_page.hide()
         self.party_page.hide()
         self.candidate_page.hide()
         self.welcome_page.show()
         self.reset(self.party_group)
         self.reset(self.candidate_group)
+
+
 
 
 
