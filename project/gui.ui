@@ -153,11 +153,16 @@
      <widget class="QLabel" name="label_wlc_error">
       <property name="geometry">
        <rect>
-        <x>130</x>
-        <y>290</y>
-        <width>161</width>
-        <height>31</height>
+        <x>110</x>
+        <y>270</y>
+        <width>191</width>
+        <height>41</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="styleSheet">
        <string notr="true">color:red</string>
@@ -165,12 +170,15 @@
       <property name="text">
        <string/>
       </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
      </widget>
      <widget class="QLabel" name="lbl_enter_int_err">
       <property name="geometry">
        <rect>
-        <x>80</x>
-        <y>280</y>
+        <x>100</x>
+        <y>270</y>
         <width>231</width>
         <height>31</height>
        </rect>
